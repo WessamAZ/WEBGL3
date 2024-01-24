@@ -32,7 +32,6 @@
 
     <canvas id="canvas" tabindex="0" autofocus></canvas>
     <div id="pane"></div>
-    <div id="colorValue"></div>
     <!-- our vertex shader; it handles the processing of individual vertices, see https://www.khronos.org/opengl/wiki/Vertex_Shader -->
     <script id="vs" type="x-shader/x-vertex">
         #version 300 es
@@ -62,7 +61,7 @@
         // these are the interpolated attributes we receive from the vertex shader
         in vec4 v_position;
         in vec3 v_normal;
-        in vec3     ;
+        in vec3 v_lightDirection;
 
         uniform vec3 ambient;
         uniform vec3 diffuse;
@@ -157,17 +156,7 @@
         setupInterface(environment);
 
         // restore data and settings
-        restoreSession(environment, function (env) {
-            // add any custom UI elements/input bindings here; make sure to add a proper default value to defaultSettings
-            // Assuming you have an HTML element to display the color value
-            const colorValueElement = document.getElementById('colorValue');
-
-            // Event listener to capture changes in the color input
-            myFolder.on('change', (value) => {
-                // Assuming 'color1' is a property of env.settings
-                const color1Value = env.settings.color1;
-            });
-         });
+        restoreSession(environment, function (env) {});
 
         // start the render loop
         requestAnimationFrame(render);
