@@ -12,7 +12,8 @@
 2- In "FS", abhängig von v_normal und v_lightDirection, berechne ich die diffuse Farbe und die spiegelnde Farbe, also berechne ich damit die "endgültige Farbe" der Ausgangsfarbe, um zu zeigen, wie sich das Licht abhängig von der Lichtrichtung und -position auf das Objekt auswirkt. 
 
 ### Assigment 1b
-<!-- Briefly describe your solution. If you did not solve the assignment, simply enter "Not solved." -->
+- Die zur Materialseite hinzugefügten Lichtpositionsparameter „Ich habe versucht, eine neue Seite für diese Parameter hinzuzufügen, aber es hat nicht funktioniert, also habe ich sie zu den vorhandenen Parametern (Umgebung, Diffus und Spiegelung) innerhalb der Materialseite in der Benutzeroberfläche hinzugefügt.“ .
+- In vs habe ich die vorhandenen Werte durch diese Lichtparameter ersetzt.
 
 ### Assigment 1 Extras
 <!-- Describe any extra features that you implemented. Make sure to cite your sources. -->
