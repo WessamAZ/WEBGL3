@@ -22,8 +22,7 @@
 ## Assignment 2
 
 ### Assignment 2a
-<!-- Briefly describe your solution. If you did not solve the assignment, simply enter "Not solved." -->
-
+- Ich extrahiere die Parameter ambientColor, specularColor und diffuseColor in der fs-Funktion mithilfe der Funktionalität „texture“, um das Objekt mit dem geschriebenen Bild abzudecken, also texturiere ich das Bild über dem Objekt und verwende dann diese Parameter, um die endgültige Farbe zu extrahieren.
 ### Assignment 2b
 <!-- Briefly describe your solution. If you did not solve the assignment, simply enter "Not solved." -->
 

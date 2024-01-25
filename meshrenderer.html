@@ -38,20 +38,22 @@
         // uniforms are constant for the entire primitive
         uniform mat4 modelViewProjection;
         uniform mat4 transposeInverseModelView;
-
+        
         in vec4 a_position;
         in vec3 a_normal;
         out vec4 v_position;
         out vec3 v_normal;
         out vec3 v_lightDirection;
         uniform float LightPosition_X ,LightPosition_Y ,LightPosition_Z ;
-
+        in vec2 a_texcoord;
+        out vec2 v_texcoord;
         void main() {          
             gl_Position = modelViewProjection * a_position;
             vec3 normal = normalize(mat3(transposeInverseModelView) * a_normal);
             v_normal = normal;
             vec3 lightDirection = normalize(vec4(LightPosition_X,LightPosition_Y, LightPosition_Z, 1.0).xyz - a_position.xyz);
             v_lightDirection = lightDirection;
+            v_texcoord = a_texcoord;
         }
         </script>
 
@@ -68,18 +70,25 @@
         uniform vec3 specular;
         uniform float shininess;
         uniform float shining;
+        in vec2 v_texcoord;
+        uniform sampler2D ambientMap;
+        uniform sampler2D diffuseMap;
+        uniform sampler2D specularMap;
         out vec4 outColor;
         
 
         void main() {
-            vec3 normal = normalize(v_normal);
+            vec3 normal   = normalize(v_normal);
             vec3 lightDirection = normalize(v_lightDirection);
-            vec3 diffuseColor = diffuse * max(dot(normal, lightDirection), 0.0);
+
+            vec3 diffuseColor = texture(diffuseMap, v_texcoord).rgb * max(dot(normal, lightDirection), 0.0);
+
             vec3 lightViewDirection = normalize(-v_lightDirection);
             vec3 lightReflectDirection = reflect(-lightDirection, normal);
 
-            vec3 specularColor = specular * pow(max(dot(lightViewDirection, lightReflectDirection), 0.0), shininess);
-            outColor = vec4(ambient + diffuseColor + specularColor, 1.0);
+            vec3 specularColor = texture(specularMap, v_texcoord).rgb * pow(max(dot(lightViewDirection, lightReflectDirection), 0.0), shininess);
+            vec3 ambientColor = ambient * texture(ambientMap, v_texcoord).rgb;
+            outColor = vec4(ambientColor + diffuseColor + specularColor, 1.0);
         }
     </script>
 
@@ -98,7 +107,6 @@
             myParameter: 50,
             // all custom parameters need to have a default value
             //myParameter: 50,
-
             shining:400,
         };
 

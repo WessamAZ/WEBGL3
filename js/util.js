@@ -211,7 +211,6 @@ function updateMaterialSelector(env, value) {
                 max: 180.0,
             });
         }
-
         if (m.ambient != undefined) {
             m.ambient = makeColor(m.ambient);
             env.ui.materialPropertiesPane.addBinding(m, "ambient", {
