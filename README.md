@@ -23,8 +23,12 @@
 
 ### Assignment 2a
 - Ich extrahiere die Parameter ambientColor, specularColor und diffuseColor in der fs-Funktion mithilfe der Funktionalität „texture“, um das Objekt mit dem geschriebenen Bild abzudecken, also texturiere ich das Bild über dem Objekt und verwende dann diese Parameter, um die endgültige Farbe zu extrahieren.
+
 ### Assignment 2b
-<!-- Briefly describe your solution. If you did not solve the assignment, simply enter "Not solved." -->
+- twMatrix ist eine Transformationsmatrix, die den Normalenvektor vom Texturraum (Tangentenraum) in den Weltraum oder einen anderen relevanten Raum transformiert. Die resultierende gestörte Normale (Normal) wird dann in Beleuchtungsberechnungen verwendet, um das Erscheinungsbild von Oberflächenunebenheiten oder Details zu erzeugen, also berechne ich twMatrix in vs.
+
+- Dann transformiere ich in fs mithilfe der Transformationsmatrix (twMatrix) die RGB-Werte einer Textur, die ich vom BumpMap-Texture-Sampler erhalten habe. Das Ergebnis wird in der Variablen twTexture gespeichert.
+
 
 ### Assignment 2c
 <!-- Briefly describe your solution. If you did not solve the assignment, simply enter "Not solved." -->

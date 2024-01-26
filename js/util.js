@@ -244,7 +244,6 @@ function updateMaterialSelector(env, value) {
                 min: 0.0, max: 1000.0
             });
         }
-
         Object.entries(m)
             .filter(([key]) => !key.startsWith("_") && key.endsWith("Map"))
             .forEach(([key]) => {
