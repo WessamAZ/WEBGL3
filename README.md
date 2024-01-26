@@ -41,7 +41,9 @@
 ## Assignment 3
 
 ### Assignment 3a
-<!-- Briefly describe your solution. If you did not solve the assignment, simply enter "Not solved." -->
+- Das neue Panel "Oval Camera AnimationPane" dient zur Steuerung der Kameraanimation "Start, Stop, Add-Keyfram und Remove-Keyfram".
+– Die Funktion updateCameraForOval in der Datei meshrenderer.html berechnet den Kamerapfad abhängig von der Ovalfunktion mithilfe von ovalPath und verwendet dann updateCameraForOval in der Renderfunktion, um die Kamerapositionsparameter jederzeit zu aktualisieren.
+- Verbinden Sie die Controller der Schnittstellentasten mit der Funktion updateCameraForOval in der Renderfunktion.
 
 ### Assignment 3b
 <!-- Briefly describe your solution. If you did not solve the assignment, simply enter "Not solved." -->

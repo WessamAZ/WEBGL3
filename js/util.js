@@ -108,7 +108,6 @@ function setupInterface(env) {
         ],
         value: "",
     });
-
 }
 
 // bind our UI controls to the settings
@@ -148,6 +147,33 @@ function setupBindings(env) {
     env.ui.settingsPane.addBinding(env.settings, "perspective", {
         label: "Perspective",
     });
+
+
+
+    // Oval Camera Animation Controlling:
+    env.ui.ovalCameraAnimationPane = env.ui.materialsPane.addFolder({ title: "Oval Camera AnimationPane" });
+
+    env.settings.animation = {
+        isAnimating: false,
+        addKeyFrameClicked: false,
+        removeKeyFrameClicked: false,
+    };
+    env.settings.isAnimating = false;
+    env.settings.addKeyFrameClicked = false; 
+    env.settings.removeKeyFrameClicked = false;
+    env.ui.start = env.ui.ovalCameraAnimationPane.addButton({ title: "Start Animation" });
+    env.ui.start.on("click", () => { env.settings.isAnimating = true; });
+
+    env.ui.stop = env.ui.ovalCameraAnimationPane.addButton({ title: "Stop Animation" });
+    env.ui.stop.on("click", () => { env.settings.isAnimating = false; });
+
+    env.ui.addKeyFrame = env.ui.ovalCameraAnimationPane.addButton({ title: "Add Keyframe" });
+    env.ui.addKeyFrame.on("click", () => { env.settings.addKeyFrameClicked = true; });
+
+    env.ui.removeKeyFrame = env.ui.ovalCameraAnimationPane.addButton({ title: "Remove Keyframe" });
+    env.ui.removeKeyFrame.on("click", () => { env.settings.removeKeyFrameClicked = true; });
+
+    
 
     env.ui.objectPropertiesPane = env.ui.objectsPane.addFolder({
         title: "Properties",

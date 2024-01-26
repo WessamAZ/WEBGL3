@@ -81,8 +81,7 @@
         uniform sampler2D specularMap;
         in mat3 transformMatrix;
         uniform sampler2D bumpMap;
-        uniform float intensity;
-        uniform float frequency;
+        uniform float intensity, frequency;
         out vec4 outColor;
         uniform bool checkPumb;
 
@@ -229,12 +228,49 @@
         // start the render loop
         requestAnimationFrame(render);
 
-        //
-        
+        var semiMajorAxis = 5; 
+        var semiMinorAxis = 2;
+
+        function ovalPath(t, semiMajorAxis, semiMinorAxis) {
+            var x = semiMajorAxis * Math.cos(t);
+            var y = semiMinorAxis * Math.sin(t);
+            var z = 5;  // Assuming a 2D oval motion in the XY plane
+            return glMatrix.vec3.fromValues(x, y, z);
+        }
+        function updateCameraForOval() {
+            // Calculate parameter 't' based on time or other factors
+            var t = (Math.sin(Date.now() * 0.0008) + 1) / 2 * 2 * Math.PI;  // Using full ellipse in one animation cycle
+
+            // Evaluate position on the oval path
+            var position = ovalPath(t, semiMajorAxis, semiMinorAxis);
+
+            // Update the camera view matrix based on the new position
+            var new_Target = [0, 0, 0];
+            var new_Up = [0, 0, 1];
+            // var envView = glMatrix.mat4.create();
+            environment.settings.view = glMatrix.mat4.lookAt(environment.settings.view, position, new_Target, new_Up);
+
+            return environment.settings.view;
+        }
+        // environment.settings.animation.isAnimating = true;
+        var keyframes = [];
 
 
         // our render function
         function render(time) {
+            // updateCameraForOval();
+            if (environment.settings.isAnimating){
+                environment.settings.view = updateCameraForOval()
+            }
+            if (environment.settings.addKeyFrameClicked){
+                keyframes.push(environment.settings.view)
+                environment.settings.addKeyFrameClicked = false
+            } 
+            if (environment.settings.removeKeyFrameClicked){
+                keyframes.pop(environment.settings.view)
+                environment.settings.removeKeyFrameClicked = false
+                if (keyframes.length !== 0) environment.settings.view = keyframes[keyframes.length - 1];
+            }
 
             if (!previousTime)
                 previousTime = time;
@@ -254,6 +290,9 @@
             gl.clearColor(environment.settings.background.r, environment.settings.background.g, environment.settings.background.b, 1.0);
             gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
+            
+
+            
             // check whether some geometry is loaded already
             if (environment.scene.geometries) {
 
@@ -351,7 +390,6 @@
             // we continuously render frames
             requestAnimationFrame(render);
         }
-
     </script>
 
 </body>
