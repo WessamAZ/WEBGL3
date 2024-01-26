@@ -31,7 +31,8 @@
 
 
 ### Assignment 2c
-<!-- Briefly describe your solution. If you did not solve the assignment, simply enter "Not solved." -->
+- Ich berechne einfach pumbNormal und verwende es anstelle von "normliaze", nachdem ich die Intensität des Parameters verwendet habe, um die Konzentration und die Häufigkeit anzuzeigen, um den Replikanten anzuzeigen, nachdem ich diese Parameter zur Material-Benutzeroberfläche hinzugefügt habe, damit der Benutzer diese beiden Parameter steuern kann.
+- Der checkPumb-Parameter dient zum Aktivieren/Deaktivieren der Pubm-Funktion für das Objekt.
 
 ### Assigment 2 Extras
 <!-- Describe any extra features that you implemented. Make sure to cite your sources. -->

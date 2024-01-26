@@ -49,14 +49,14 @@
         out vec2 v_texcoord;
 
         in vec3 tan , bitan;
-        out mat3 twMatrix;
+        out mat3 transformMatrix;
 
         void main() {          
             gl_Position = modelViewProjection * a_position;
             vec3 normal = normalize(mat3(transposeInverseModelView) * a_normal);
             v_normal = normal;
             vec3 lightDirection = normalize(vec4(LightPosition_X,LightPosition_Y, LightPosition_Z, 1.0).xyz - a_position.xyz);
-            twMatrix = mat3(tan, bitan, normalize(a_normal));
+            transformMatrix = mat3(tan, bitan, normalize(a_normal));
             v_lightDirection = lightDirection;
             v_texcoord = a_texcoord;
         }
@@ -79,20 +79,33 @@
         uniform sampler2D ambientMap;
         uniform sampler2D diffuseMap;
         uniform sampler2D specularMap;
-        in mat3 twMatrix;
+        in mat3 transformMatrix;
         uniform sampler2D bumpMap;
+        uniform float intensity;
+        uniform float frequency;
         out vec4 outColor;
+        uniform bool checkPumb;
+
         
 
         void main() {
-            vec3 twTexture = normalize(twMatrix * texture(bumpMap, v_texcoord).xyz * 2.0 - 1.0);
-            vec3 normal   = normalize(twTexture);
+            vec3 transformTexture = normalize(transformMatrix * texture(bumpMap, v_texcoord).xyz * 2.0 - 1.0);
+            vec3 normal   = normalize(transformTexture);
+            vec3 pumbNormal = normalize(normal + intensity *  sin(v_texcoord.x * frequency) * cos(v_texcoord.y * frequency)  ); 
             vec3 lightDirection = normalize(v_lightDirection);
             vec3 ambientColor = ambient * texture(ambientMap, v_texcoord).rgb;
-            vec3 diffuseColor = texture(diffuseMap, v_texcoord).rgb * max(dot(normal, lightDirection), 0.0);
 
+            vec3 diffuseColor = vec3(0.0);
+            vec3 lightReflectDirection = vec3(0.0);
+            if(checkPumb){
+                 diffuseColor = texture(diffuseMap, v_texcoord).rgb * max(dot(pumbNormal, lightDirection), 0.0);
+                 lightReflectDirection = reflect(-lightDirection, pumbNormal);
+            }
+            else{
+                diffuseColor = texture(diffuseMap, v_texcoord).rgb * max(dot(normal, lightDirection), 0.0);
+                lightReflectDirection = reflect(-lightDirection, normal);
+            }
             vec3 lightViewDirection = normalize(-v_lightDirection);
-            vec3 lightReflectDirection = reflect(-lightDirection, normal);
             vec3 specularColor = texture(specularMap, v_texcoord).rgb * pow(max(dot(lightViewDirection, lightReflectDirection), 0.0), shininess);
             
             outColor = vec4(ambientColor + diffuseColor + specularColor, 1.0);
@@ -140,6 +153,10 @@
             LightPosition_X: 2.0,
             LightPosition_Y: 1.0,
             LightPosition_Z: 1.0,
+            intensity: 1.0,
+            frequency: 10.0,
+            amplitude: 1.0,
+            checkPumb: true,
         };
 
         const environment = {

@@ -211,6 +211,25 @@ function updateMaterialSelector(env, value) {
                 max: 180.0,
             });
         }
+        if (m.intensity != undefined) {
+            env.ui.materialPropertiesPane.addBinding(m, "intensity", {
+                min: 0.0, 
+                max: 1.0,
+            });
+        }
+        if (m.frequency != undefined) {
+            env.ui.materialPropertiesPane.addBinding(m, "frequency", {
+                min: 1.0, 
+                max: 100.0,
+            });
+        }
+        if (m.checkPumb != undefined) {
+            env.ui.materialPropertiesPane.addBinding(m, "checkPumb", {
+                label: "checkPumb",
+            });
+        }   
+
+
         if (m.ambient != undefined) {
             m.ambient = makeColor(m.ambient);
             env.ui.materialPropertiesPane.addBinding(m, "ambient", {
